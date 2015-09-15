@@ -30,15 +30,13 @@ public class MainActivity extends ActionBarActivity {
     public final String APP_TAG = "MobileComputingTutorial";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public final static int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 1035;
+    public final static int CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE = 1036;
     public final static int PICK_PHOTO_CODE = 1046;
     public final static int PICK_VIDEO_CODE = 1047;
 
     public String photoFileName = "photo.jpg";
     public String videoFileName = "video.mp4";
-    // File path of recorded audio
-    private String audioFileName;
-    private MediaRecorder mediaRecorder;
-    private MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,14 @@ public class MainActivity extends ActionBarActivity {
 
     public void onRecordAudioClick(View v){
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)){
-
+            Intent intent = new Intent(MainActivity.this, RecordAudioActivity.class);
+            if (intent!=null){
+                // File path of recorded audio
+                String audioFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+                audioFileName += "/audiorecordtest.3gp";
+                intent.putExtra("audioFileName",audioFileName);
+                startActivityForResult(intent,CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE);
+            }
         }
     }
     // Returns the Uri for a photo/media stored on disk given the fileName
@@ -183,49 +188,4 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private void capaureAudio(){
-        PackageManager pmanager = this.getPackageManager();
-        if (pmanager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
-            // Set the file location for the audio
-            audioFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-            audioFileName += "/audiorecordtest.3gp";
-            // Create the recorder
-            mediaRecorder = new MediaRecorder();
-            // Set the audio format and encoder
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            // Setup the output location
-            mediaRecorder.setOutputFile(audioFileName);
-            // Start the recording
-            try {
-                mediaRecorder.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mediaRecorder.start();
-        } else { // no mic on device
-            Toast.makeText(this, "This device doesn't have a mic!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void stopRecording(){
-        // Stop the recording of the audio
-        mediaRecorder.stop();
-        mediaRecorder.reset();
-        mediaRecorder.release();
-        mediaRecorder=null;
-    }
-
-    private void playBack(){
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            mediaPlayer.setDataSource(audioFileName);
-            mediaPlayer.prepare(); // must call prepare first
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mediaPlayer.start(); // then start
-    }
 }

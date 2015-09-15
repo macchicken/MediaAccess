@@ -25,7 +25,8 @@
     <Button
         android:id="@+id/takephoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:onClick="onTakePhotoClick"
         android:text="Take Photo" />
 
@@ -58,6 +59,5 @@
         android:layout_weight="1"
         android:onClick="onRecordAudioClick"
         android:text="Record Audio" />
-
 
 </LinearLayout>

@@ -3,5 +3,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="quit">Exit</string>
     <string name="title_activity_record_audio">RecordAudtioActivity</string>
 </resources>

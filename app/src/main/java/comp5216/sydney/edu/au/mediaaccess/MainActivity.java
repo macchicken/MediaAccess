@@ -45,6 +45,27 @@ public class MainActivity extends ActionBarActivity {
 //        mediaPlayer = MediaPlayer.create(this, R.raw.sample_audio);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch(id){
+            case R.id.quit:
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MediaAccessApplication.getContext().startActivity(startMain);
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void onLoadPhotoClick(View view) {
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,

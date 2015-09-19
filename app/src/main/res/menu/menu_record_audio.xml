@@ -2,6 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="comp5216.sydney.edu.au.mediaaccess.RecordAudioActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/quit" android:title="@string/quit"
+        android:orderInCategory="100" app:showAsAction="ifRoom" />
 </menu>

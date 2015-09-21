@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/photopreview"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="fitCenter"/>
@@ -15,7 +15,7 @@
 
     <VideoView
         android:id="@+id/videoview"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"

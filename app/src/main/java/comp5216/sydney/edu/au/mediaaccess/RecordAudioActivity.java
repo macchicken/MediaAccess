@@ -26,7 +26,7 @@ public class RecordAudioActivity extends ActionBarActivity {
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
     private String audioFileName;
-    private int MAX_DURATION=60000;
+    private int MAX_DURATION=10000;
     private ProgressBar pb;
     private Timer timer;
     private boolean stopped;
@@ -147,7 +147,9 @@ public class RecordAudioActivity extends ActionBarActivity {
             recordBtn.setEnabled(false);
             stopRecordBtn.setEnabled(false);
             mediaPlayer.prepare(); // must call prepare first
-            pb.setMax(mediaPlayer.getDuration());
+            int maxd=mediaPlayer.getDuration();
+            System.out.println(maxd);
+            pb.setMax(maxd);
             pb.setProgress(0);
             timer = new Timer();
             pb.setVisibility(View.VISIBLE);
@@ -183,10 +185,15 @@ public class RecordAudioActivity extends ActionBarActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            try
-                            {
-                                pb.setProgress(pb.getProgress()+1000);
-                            } catch (Exception e) {e.printStackTrace();}
+                        try
+                        {
+                            pb.setProgress(pb.getProgress() + 1000);
+                            if (mediaRecorder!=null&&pb.getProgress()>=pb.getMax()){
+                                onStopRecording(null);
+                            }else if (mediaPlayer!=null&&!mediaPlayer.isPlaying()){
+                                onStopPlayBack(null);
+                            }
+                        } catch (Exception e) {e.printStackTrace();}
                         }
                     });
                 }
